@@ -30,8 +30,8 @@ jobs:
           echo "Build finished. Contents of dist/:"
           ls -la dist
 
-      - name: Upload macOS App
+      - name: Upload .app as artifact
         uses: actions/upload-artifact@v3
         with:
-          name: DataLens_PCA_Mac
-          path: dist/
+          name: macOS-App
+          path: dist/DataLens_PCA_Tool.app
