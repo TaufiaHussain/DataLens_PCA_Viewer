@@ -1,3 +1,4 @@
+# Trigger macOS rebuild – May 21
 name: Build macOS App
 
 on:
@@ -25,10 +26,12 @@ jobs:
 
       - name: Build .app using PyInstaller
         run: |
-          pyinstaller --onefile --windowed --name "DataLens_PCA_Viewer" app.py
+          pyinstaller --onefile --windowed --name DataLens_PCA_Viewer app.py
+          echo "Build finished. Contents of dist/:"
+          ls -la dist
 
       - name: Upload macOS App
         uses: actions/upload-artifact@v3
         with:
           name: DataLens_PCA_Mac
-          path: dist/DataLens_PCA_Viewer
+          path: dist/
