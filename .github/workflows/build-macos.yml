@@ -10,29 +10,27 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: 🧾 Checkout code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: 🐍 Set up Python 3.11
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.10'
 
-      - name: 📦 Install dependencies
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pyinstaller numpy matplotlib scikit-learn spectral
+          pip install pyinstaller spectral scikit-learn matplotlib
 
-      - name: 🔨 Build macOS .app with PyInstaller
+      - name: Build macOS app with PyInstaller
         run: |
-          pyinstaller app.py \
-            --onefile \
-            --windowed \
-            --name "DataLens_PCA_Viewer" \
-            --icon datalens_logo.ico
+          pyinstaller --onefile --windowed app.py --icon=datalens_logo.ico
+          mkdir -p dist_output
+          mv dist/app dist_output/DataLens_PCA_Viewer_Mac
 
-      - name: 📦 Upload .app bundle
+      - name: Upload built app
         uses: actions/upload-artifact@v3
         with:
-          name: DataLens_PCA_Viewer_macOS
-          path: dist/DataLens_PCA_Viewer
+          name: datalens-pca-viewer-mac
+          path: dist_output/DataLens_PCA_Viewer_Mac
